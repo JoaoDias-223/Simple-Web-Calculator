@@ -12,7 +12,8 @@ let calculator = {
         hasDot: false,
     },
     currentOperation: '',
-    availableOperations: ['x', '/', '+', '-'],
+    operationChanged: false,
+    availableOperations: ["x", "/", "+", "-"],
     currentNumber: {
         reference: this.firstNumber,
         location: 0,
@@ -29,8 +30,6 @@ result = ${result}
     },
 
     parseInput(value){
-        let setOP = false;
-
         if (this.currentNumber.reference == undefined){
             this.currentNumber.reference = this.firstNumber;
         }
@@ -39,30 +38,31 @@ result = ${result}
             this.currentNumber.reference.value = '';
         }
 
-        this.availableOperations.forEach((operation)=>{
-            if (value === operation){
-                this.currentOperation = value;
-                this.switchCurrentNumber();
-                this.updateDisplay(value);
-                setOP = true;
-            } 
-        });
-
-        if (setOP){
+        if (this.availableOperations.includes(value)){
+            this.currentOperation = value;
+            this.operationChanged = true;
+            this.secondNumber.value = '';
+            this.secondNumber.hasDot = false;
+            this.switchCurrentNumber();
+            this.updateDisplay(value);
             return;
         }
-
-        if (value == '='){
+        else if (value == "="){
             this.equalOperation();
+            if (this.operationChanged) {
+                this.switchCurrentNumber()
+            };
+            this.operationChanged = false;
         }
-        else {
-            this.updateCurrentNumber(value)
+        else{
+            this.updateCurrentNumber(value);
         }
 
         this.updateDisplay(this.currentNumber.reference.value);
     },
 
     switchCurrentNumber(){
+        console.log("Called switchNumber!");
         if (this.currentNumber.location == 0) {
             this.currentNumber.location = 1;
             this.currentNumber.reference = this.secondNumber;
@@ -107,24 +107,28 @@ result = ${result}
     },
 
     equalOperation() {
-        let result;
+        let numbers = this.parseFloat(this.firstNumber.value, this.secondNumber.value);
+        console.log(numbers);
+        let result = null;
 
         switch (this.currentOperation){
             case '+':
-                result = this.add(Number(this.firstNumber.value), Number(this.secondNumber.value));
+                result = this.add(numbers[0], numbers[1]);
+                result /= numbers[2];
                 break;
             case '-':
-                result = this.subtract(Number(this.firstNumber.value), Number(this.secondNumber.value));
+                result = this.subtract(numbers[0], numbers[1]);
+                result /= numbers[2];
                 break;
             case 'x':
-                result = this.multiply(Number(this.firstNumber.value), Number(this.secondNumber.value));
+                result = this.multiply(numbers[0], numbers[1]);
+                result /= numbers[2];
                 break;
             case '/':
-                result = this.divide(Number(this.firstNumber.value), Number(this.secondNumber.value));
+                result = this.divide(numbers[0], numbers[1]);
                 break;
             default:
                 result = NaN;
-                this.switchCurrentNumber();     //THIS IS A REALLY BAD SOLUTION, I'M ONLY DOING THIS BECAUSE WHEN THE RESULT IS NOT A NUMBER THE CURRENT NUMBER REFERENCE BUGS OUT AND POINTS TO THE SECOND NUMBER INSTEAD OF THE FIRST ONE;
         }
 
         result = result.toString();
@@ -134,16 +138,34 @@ result = ${result}
         this.firstNumber.value = result;
         this.firstNumber.hasDot = this.IsNumberFloat(result);
 
-        this.secondNumber.value = '';
-        this.secondNumber.hasDot = false;
-        
-        this.switchCurrentNumber();
-        this.currentOperation = '';
-
         this.printCurrentStats(result);
     },
 
-    add(number1, number2){
+    getDecimalPart(number){
+        let decimal = '';
+        if (this.IsNumberFloat(number)){
+            decimal = number.split(".")[1];
+        }
+
+        return decimal;
+    },
+
+    parseFloat(number1, number2){
+        let factor = 1;
+
+        if (this.IsNumberFloat(number1) || this.IsNumberFloat(number2)){
+            console.log("There is a float!");
+            let lengths = [this.getDecimalPart(number1).length, this.getDecimalPart(number2).length];
+            factor = Math.max(...lengths);
+        }
+0
+        console.log(factor);
+
+        return [Number(number1)*factor, Number(number2)*factor, factor];
+    },
+
+    //Basic Operations
+    add(number1, number2, factor){
         return number1 + number2; 
     },
 
@@ -168,23 +190,23 @@ result = ${result}
     },
 
     buttons:  {
-        b0: document.getElementById("button-0"),
-        b1: document.getElementById("button-1"),
-        b2: document.getElementById("button-2"),
-        b3: document.getElementById("button-3"),
-        b4: document.getElementById("button-4"),
-        b5: document.getElementById("button-5"),
-        b6: document.getElementById("button-6"),
-        b7: document.getElementById("button-7"),
-        b8: document.getElementById("button-8"),
-        b9: document.getElementById("button-9"),
-        bDot: document.getElementById("button-."),
-        bEqual: document.getElementById("button-="),
-        bPlus: document.getElementById("button-+"),
-        bMinus: document.getElementById("button--"),
-        bProduct: document.getElementById("button-x"),
-        bDivision: document.getElementById("button-/"),
-        bClear: document.getElementById("clear-button"),
+        b0:         document.getElementById("button-0"),
+        b1:         document.getElementById("button-1"),
+        b2:         document.getElementById("button-2"),
+        b3:         document.getElementById("button-3"),
+        b4:         document.getElementById("button-4"),
+        b5:         document.getElementById("button-5"),
+        b6:         document.getElementById("button-6"),
+        b7:         document.getElementById("button-7"),
+        b8:         document.getElementById("button-8"),
+        b9:         document.getElementById("button-9"),
+        bDot:       document.getElementById("button-."),
+        bEqual:     document.getElementById("button-="),
+        bPlus:      document.getElementById("button-+"),
+        bMinus:     document.getElementById("button--"),
+        bProduct:   document.getElementById("button-x"),
+        bDivision:  document.getElementById("button-/"),
+        bClear:     document.getElementById("clear-button"),
     },
 }
 
