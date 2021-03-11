@@ -1,2 +1,81 @@
+:root {
+    --white: #F4F4FC;
+    --black: #040404;
+    --lightBlue: #0683d6;
+    --blue: #0464A4;
+    --darkBlue: #033a5e;
+    --DisplayToButtonsGap: 5%;
+    --ClearToDisplayGap: 5%;
+    --ButtonToButtonGap: 0.3vw;
+    --MainColumnWidth: 80vw;
+    --DisplayHeight: 200px;
+    --ButtonsHeight: 400px;
+    --FontSize: 30px;
+}
 
+body {
+    background-color: var(--white);
+}
+
+.bordered-element {
+    box-sizing: border-box;
+    border: 3px solid black;
+    border-radius: 3px;
+}
+
+.centered-content {
+    position: fixed;
+    height: 98%;
+    width: 99%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-content {
+    display: inline-grid;
+    grid-template: var(--DisplayHeight) var(--ButtonsHeight) / var(--MainColumnWidth);
+    background-color: var(--white);
+}
+
+.display-container {
+    display: grid;
+    grid-template: auto / 18.2% 81.8%;
+    gap: 0 0
+}
+
+.display {
+    text-align: right;
+    font-size: 50px;
+}
+
+#clear-button {
+    width: 100%;
+    height: 100%;
+    font-size: var(--FontSize);
+}
+
+.buttons-container {
+    display: grid;
+    grid-template: auto/ 55% 40%;
+    gap: 0 5%;
+}
+
+.numbers {
+    display: grid;
+    grid-template: auto / auto auto auto;
+}
+
+.numbers > button {
+    font-size: var(--FontSize);
+}
+
+.operations{
+    display: grid;
+    grid-template: auto / auto auto;
+}
+
+.operations > button {
+    font-size: var(--FontSize);
+}
 
