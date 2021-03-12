@@ -1,7 +1,13 @@
-let validInput = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-', 'x', '/', '=',  '.', 'CE']
+import {getCalculator} from '../controller/calculator-control.js';
+
+
+let calculator = getCalculator();
+
+let display = document.getElementById('display-content');
 
 let sendSymbolToCalculator = (symbol) => {
-    console.log(symbol);
+    calculator.parseInput(symbol);
+    display.innerHTML = calculator.display;
 }
 
 let keyboardInputHandle = (event) => {
@@ -14,7 +20,7 @@ let keyboardInputHandle = (event) => {
         key = 'x';
     }
 
-    if (validInput.includes(key)){
+    if (calculator.validInput.includes(key)){
         sendSymbolToCalculator(key);
     }
 }
@@ -22,9 +28,11 @@ let keyboardInputHandle = (event) => {
 let buttonInputHandle = (element) => {
     let symbol = element.innerHTML;
 
-    if (validInput.includes(symbol)){   
+    if (calculator.validInput.includes(symbol)){   
         sendSymbolToCalculator(symbol);
     }
 }
 
 document.addEventListener('keydown', keyboardInputHandle);
+
+window.buttonInputHandle = buttonInputHandle;
