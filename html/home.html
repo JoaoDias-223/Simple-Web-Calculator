@@ -5,14 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The E.V.A. - The Essential Virtual Abacus</title>
-    <link rel="stylesheet" href="../css/home.css">
+    <link rel="stylesheet" href="../css/home.css"/>
+    <script src="../js/view/user-interaction.js"></script>
 </head>
 <body>
     <div class="centered-content bordered-element">
         <div class="main-content bordered-element">
             <div class="display-container bordered-element">
                 <div class="clear-button-container">
-                    <button id="clear-button">CE</button>
+                    <button id="clear-button" onclick="buttonInputHandle(this)">CE</button>
                 </div>
                 <div class="display bordered-element">
                     <p id="display-content">0</p>
@@ -20,24 +21,24 @@
             </div>
             <div class="buttons-container">
                 <div class="numbers">
-                    <button id="button-7">7</button>
-                    <button id="button-8">8</button>
-                    <button id="button-9">9</button>
-                    <button id="button-4">4</button>
-                    <button id="button-5">5</button>
-                    <button id="button-6">6</button>
-                    <button id="button-1">1</button>
-                    <button id="button-2">2</button>
-                    <button id="button-3">3</button>
-                    <button id="button-.">.</button>
-                    <button id="button-0">0</button>
-                    <button id="button-=">=</button>
+                    <button onclick="buttonInputHandle(this)">7</button>
+                    <button onclick="buttonInputHandle(this)">8</button>
+                    <button onclick="buttonInputHandle(this)">9</button>
+                    <button onclick="buttonInputHandle(this)">4</button>
+                    <button onclick="buttonInputHandle(this)">5</button>
+                    <button onclick="buttonInputHandle(this)">6</button>
+                    <button onclick="buttonInputHandle(this)">1</button>
+                    <button onclick="buttonInputHandle(this)">2</button>
+                    <button onclick="buttonInputHandle(this)">3</button>
+                    <button onclick="buttonInputHandle(this)">.</button>
+                    <button onclick="buttonInputHandle(this)">0</button>
+                    <button onclick="buttonInputHandle(this)">=</button>
                 </div>
                 <div class="operations">
-                    <button id="button-/">/</button>
-                    <button id="button-x">x</button>
-                    <button id="button--">-</button>
-                    <button id="button-+">+</button>
+                    <button onclick="buttonInputHandle(this)">/</button>
+                    <button onclick="buttonInputHandle(this)">x</button>
+                    <button onclick="buttonInputHandle(this)">-</button>
+                    <button onclick="buttonInputHandle(this)">+</button>
                 </div>
             </div>
         </div>
