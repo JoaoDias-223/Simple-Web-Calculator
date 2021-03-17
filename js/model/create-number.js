@@ -19,6 +19,10 @@ let createNumber = (value = '') => {
 
             return [this.value, false];
         },
+
+        isFloat(){
+            return this.value.includes('.');
+        },
     };
 }
 
