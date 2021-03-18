@@ -52,13 +52,13 @@ ${tag}//
         },
 
         parseArithmeticSymbol (symbol) {
-            this.wasEqualOperationCalled = false;
-
             let isOperationContinuous = this.calculateResultFromContinuousOperations();
 
             this.operation.setCurrent(symbol);
 
             this.switchCurrentNumber();
+
+            this.clearSecondNumberIfEqualWasCalled();
 
             if (isOperationContinuous){
                 this.updateDisplay(this.firstNumber.getValue());
@@ -82,14 +82,22 @@ ${tag}//
         },
 
         parseNumber (symbol) {
-            if (this.wasEqualOperationCalled){
-                this.wasEqualOperationCalled = false;
-                this.currentNumber.getReference().clearValue();
-            }
+            this.clearSecondNumberIfEqualWasCalled();
             this.appendSymbolToCurrentNumber(symbol);
             this.updateDisplay(this.currentNumber.getReference().getValue());
 
             return true;
+        },
+
+        clearSecondNumberIfEqualWasCalled () {
+            if (this.wasEqualOperationCalled){
+                this.wasEqualOperationCalled = false;
+                this.secondNumber.clearValue();
+
+                return true;
+            }
+
+            return false;
         },
 
         appendSymbolToCurrentNumber(symbol){
@@ -132,6 +140,7 @@ ${tag}//
 
         equalOperation() {
             this.wasEqualOperationCalled = true;
+
             let numbersInIntegerFormat = this.convertNumbersToIntegers(this.firstNumber, this.secondNumber);
             let result = null;
 
