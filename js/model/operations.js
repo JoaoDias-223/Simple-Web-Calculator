@@ -8,6 +8,12 @@ let createOperation = () => {
         },
         _current: '',
         _previous: '',
+        _names: {
+            '+': 'addition',
+            '-': 'subtraction',
+            'x': 'multiplication',
+            '/': 'division',
+        },
 
         getCurrent(){
             return this._current;
@@ -20,6 +26,10 @@ let createOperation = () => {
         setCurrent(symbol) {
             this._previous = this._current;
             this._current = symbol;
+        },
+
+        getNames() {
+            return this._names;
         },
 
         getArithmeticOperations() {

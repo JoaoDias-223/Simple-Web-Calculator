@@ -21,7 +21,7 @@ let getCalculator = () => {
         },
 
         printInfo(tag){
-            console.log(`
+            /*console.log(`
 ${tag}//
     firstNumber: ${this.firstNumber._value}
     secondNumber: ${this.secondNumber._value}
@@ -31,7 +31,7 @@ ${tag}//
             current: ${this.currentOperation}
             previous: ${this.previousOperation}
         }`
-);
+);*/
         },
 
         parseInput (symbol) {
