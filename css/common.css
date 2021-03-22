@@ -1,0 +1,15 @@
+button, input[type="submit"], input[type="reset"] {
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+}
+
+.bordered-element {
+    box-sizing: border-box;
+    border: 3px solid black;
+    border-radius: 10px;
+}

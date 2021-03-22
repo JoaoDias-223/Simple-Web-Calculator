@@ -1,0 +1,27 @@
+:root {
+    /* Colors */
+    --white: #F4F4FC;
+    --black: #040404;
+    --lightBlue: #0683d6;
+    --blue: #0464A4;
+    --darkBlue: #033a5e;
+
+    /* Sizes */
+    --DisplayHeight: clamp(50px, 20vw, 200px);
+    --ButtonsHeight: clamp(100px, 30vw, 400px);
+    --MainColumnWidth: clamp(20px, 50vw, 600px);
+
+    /* Gaps */
+    --DisplayToButtonsGap: clamp(1px, 1vw, 50px);
+    --ClearToDisplayGap: 5%;
+    --ButtonToButtonGap: 0.3vw;
+
+    /* Fonts */
+    --ButtonFontSize: clamp(10px, 2vw, 50px);
+    --DisplayFontSize: clamp(10px, 3vw, 50px);
+
+    /* Images */
+    --DefaultBackgroundImage: url("../assets/eva-face.jpg");
+    --AlternateBackgroundImage: url("../assets/eva-robot.png");
+
+}
