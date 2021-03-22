@@ -6,9 +6,20 @@ let calculator = getCalculator();
 let display = document.getElementById('display-content');
 
 let sendSymbolToCalculator = (symbol) => {
-    calculator.parseInput(symbol);
+    let wasParsingSuccessful = calculator.parseInput(symbol);
     display.innerHTML = calculator.display;
 
+    if (!wasParsingSuccessful) {
+        setButtonInactive(activeButtonID);
+    }
+    else{
+        checkSymbolToControlButton(symbol);
+    }
+}
+
+let activeButtonID = null;
+
+let checkSymbolToControlButton = (symbol) => {
     if (calculator.operation.isSymbolArithmetic(symbol)) {
         setButtonInactive(activeButtonID);
         setButtonActive(calculator.operation.getNames()[symbol]);
@@ -16,9 +27,9 @@ let sendSymbolToCalculator = (symbol) => {
     else if (symbol == '=' || symbol == 'CE'){
         setButtonInactive(activeButtonID);
     }
-}
 
-let activeButtonID = null;
+    return true;
+}
 
 let setButtonActive = (key) => {
     if (!operationButtons[key]?.className.includes(" active")) {
