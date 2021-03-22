@@ -21,7 +21,7 @@ let getCalculator = () => {
         },
 
         printInfo(tag){
-            /*console.log(`
+            console.log(`
 ${tag}//
     firstNumber: ${this.firstNumber._value}
     secondNumber: ${this.secondNumber._value}
@@ -31,28 +31,37 @@ ${tag}//
             current: ${this.currentOperation}
             previous: ${this.previousOperation}
         }`
-);*/
+);
         },
 
         parseInput (symbol) {
+            let returnValue = true;
+
             if (this.operation.isSymbolArithmetic(symbol)){
-                this.parseArithmeticSymbol(symbol);
+                returnValue = this.parseArithmeticSymbol(symbol);
             }
             else if (symbol == '=') {
-                this.parseEqualSymbol(symbol)
+                returnValue = this.parseEqualSymbol(symbol);
             }
             else if (symbol == "CE") {
-                this.clearDisplay();
+                returnValue = this.clearDisplay();
             }
             else {
-                this.parseNumber(symbol);
+                returnValue = this.parseNumber(symbol);
             }
 
-            return this;
+            return returnValue;
         },
 
         parseArithmeticSymbol (symbol) {
             let isOperationContinuous = this.calculateResultFromContinuousOperations();
+
+            if (isOperationContinuous[1] == 1) {
+                console.log("EROOOOOOO");
+                this.clearDisplay();
+                this.updateDisplay(this.errorMessage);
+                return false;
+            }
 
             this.operation.setCurrent(symbol);
 
@@ -60,7 +69,7 @@ ${tag}//
 
             this.clearSecondNumberIfEqualWasCalled();
 
-            if (isOperationContinuous){
+            if (isOperationContinuous[0]){
                 this.updateDisplay(this.firstNumber.getValue());
             }
             else {
@@ -75,8 +84,14 @@ ${tag}//
                 this.operation.setCurrent(symbol);
             }
             
-            this.calculateResultAndSwitch();
+            let wasOperationSucessful = this.calculateResultAndSwitch();
             this.updateDisplay(this.currentNumber.getReference().getValue());
+
+            console.log(wasOperationSucessful);
+
+            if (!wasOperationSucessful) {
+                this.currentNumber.getReference().setValue('');
+            }
             
             return true;
         },
@@ -116,29 +131,40 @@ ${tag}//
 
         calculateResultAndSwitch() {
             this.printInfo();
-            this.equalOperation();
+            let equalOperationReturn = this.equalOperation();
             if (this.isCurrentNumberPointingToSecondNumber()){ //We switch to the first number to show the result;
                 this.switchCurrentNumber();
             }
 
             this.printInfo();
+
+            return equalOperationReturn;
         },
 
         calculateResultFromContinuousOperations(){
             if (this.operation.isCurrentOperationArithmetic()){
                 this.operation.setCurrent('=');
-                this.calculateResultAndSwitch();
+                let wasOperationSucessful = this.calculateResultAndSwitch();
+
+                if (!wasOperationSucessful) {
+                    return [false, 1];
+                }
+
                 this.secondNumber.clearValue();
 
                 this.updateDisplay(this.currentNumber.getReference().getValue());
 
-                return true;
+                
+
+                return [true, 0];
             }
 
-            return false;
+            return [false, 0];
         },
 
         equalOperation() {
+            let returnValue = true;
+
             this.wasEqualOperationCalled = true;
 
             let numbersInIntegerFormat = this.convertNumbersToIntegers(this.firstNumber, this.secondNumber);
@@ -157,9 +183,19 @@ ${tag}//
                 result = NaN;
             }
 
-            result = result.toString();
+            console.log(result);
+            if (isNaN(result)){
+
+                result = this.errorMessage;
+                returnValue = false;
+            }
+            else{
+                result = result.toString();
+            }
             console.log(`RESULT: ${result}`)
             this.firstNumber._value = result;
+
+            return returnValue;
         },
 
         isCurrentNumberPointingToFirstNumber() {
@@ -189,6 +225,8 @@ ${tag}//
             this.currentNumber.setReference(this.firstNumber, 0);
             this.operation.clear();
             this.updateDisplay('');
+
+            return true;
         }
     }
 
