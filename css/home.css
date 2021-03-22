@@ -43,6 +43,11 @@ body {
     align-items: center;
     justify-content: end;
     padding-right: 5px;
+    overflow: auto;
+}
+
+#display-content {
+    overflow-x: auto;
 }
 
 #clear-button {
