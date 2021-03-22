@@ -79,3 +79,7 @@ body {
     font-size: var(--FontSize);
 }
 
+.active {
+    background-color: #0683d6;
+    color: white;
+}

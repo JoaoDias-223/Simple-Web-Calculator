@@ -8,6 +8,30 @@ let display = document.getElementById('display-content');
 let sendSymbolToCalculator = (symbol) => {
     calculator.parseInput(symbol);
     display.innerHTML = calculator.display;
+
+    if (calculator.operation.isSymbolArithmetic(symbol)) {
+        setButtonInactive(activeButtonID);
+        setButtonActive(calculator.operation.getNames()[symbol]);
+    }
+    else if (symbol == '=' || symbol == 'CE'){
+        setButtonInactive(activeButtonID);
+    }
+}
+
+let activeButtonID = null;
+
+let setButtonActive = (key) => {
+    if (!operationButtons[key]?.className.includes(" active")) {
+        operationButtons[key].className = operationButtons[key].className + " active";
+        activeButtonID = key;
+    }
+}
+
+let setButtonInactive = (key) => {
+    if (operationButtons[key]?.className.includes(" active")){
+        operationButtons[key].className = operationButtons[key].className.replace(' active', '');
+        activeButtonID = null;
+    }
 }
 
 let keyboardInputHandle = (event) => {
@@ -34,5 +58,11 @@ let buttonInputHandle = (element) => {
 }
 
 document.addEventListener('keydown', keyboardInputHandle);
+
+let operationButtons = {};
+
+for (let operationName of Object.values(calculator.operation.getNames())){
+    operationButtons[operationName] = document.getElementById(operationName + '-operation');
+}
 
 window.buttonInputHandle = buttonInputHandle;
