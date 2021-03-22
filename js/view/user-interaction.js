@@ -48,11 +48,21 @@ let setButtonInactive = (key) => {
 let keyboardInputHandle = (event) => {
     let key = event.key;
 
-    if (event.code === "NumpadDecimal"){
-        key = '.';
-    }
-    else if (event.code === "NumpadMultiply"){
-        key = 'x';
+    console.log(key);
+
+    switch (event.code) {
+        case ("NumpadDecimal"):
+            key = '.';
+            break;
+        case ("NumpadMultiply"):
+            key = 'x';
+            break;
+        case ("Enter"):
+            key = '=';
+            break;
+        case ("Delete"):
+            key = 'CE';
+            break;
     }
 
     if (calculator.validInput.includes(key)){
