@@ -41,7 +41,7 @@ body {
     color: var(--white);
     background: var(--black);
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
     padding-right: 5px;
     overflow: auto;
 }
