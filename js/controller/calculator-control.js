@@ -125,8 +125,8 @@ ${tag}//
 
             let lengths = [number1.getDecimalPart().length, number2.getDecimalPart().length];
             factor = Math.max(...lengths, 1);
-
-            return [Number(number1.getValue())*factor, Number(number2.getValue())*factor, factor];
+            console.log(factor);
+            return [Number(number1.getValue())*(10**factor), Number(number2.getValue())*(10**factor), factor];
         },
 
         calculateResultAndSwitch() {
@@ -168,6 +168,8 @@ ${tag}//
             this.wasEqualOperationCalled = true;
 
             let numbersInIntegerFormat = this.convertNumbersToIntegers(this.firstNumber, this.secondNumber);
+            console.log("FLOAT");
+            console.log(numbersInIntegerFormat);
             let result = null;
 
             console.log(numbersInIntegerFormat);
@@ -176,7 +178,7 @@ ${tag}//
                 result = this.operation.getArithmeticOperations()[this.operation.getPrevious()]( numbersInIntegerFormat[0], numbersInIntegerFormat[1] );
 
                 if (this.operation.getPrevious() != '/'){
-                    result /= numbersInIntegerFormat[2];
+                    result /= 10**numbersInIntegerFormat[2];
                 }
             }
             else {
