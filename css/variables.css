@@ -5,6 +5,7 @@
     --lightBlue: #0683d6;
     --blue: #0464A4;
     --darkBlue: #033a5e;
+    --mediumDarkBlue: #054e80;
 
     /* Sizes */
     --DisplayHeight: clamp(50px, 20vw, 200px);

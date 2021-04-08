@@ -99,14 +99,14 @@ body {
     border-radius: 10px;
 }
 
-.numbers>button:active, .operations>button:active{
-    background-color: var(--black);
-    color: white;
-}
-
 #clear-button:hover, .numbers>button:hover, .operations>button:hover{
     background-color: var(--darkBlue);
     color: var(--white);
+}
+
+.numbers>button:active, .operations>button:active{
+    background-color: var(--black);
+    color: white;
 }
 
 #clear-button:active{
